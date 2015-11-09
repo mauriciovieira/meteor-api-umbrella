@@ -36,10 +36,13 @@ var apiBackends = {
     // Extend the Options object with the Backend object
     localOptions.data = backendObject;
 
-    // Make POST request to create new backend
-    var response = HTTP.post(url, localOptions);
-
-    return response;
+    try {
+      // Make POST request to create new backend
+      var response = HTTP.post(url, localOptions);
+      return response;
+    } catch (error) {
+      throw new ApiUmbrellaError(error);
+    }
   },
   /*
   Get all API backends
