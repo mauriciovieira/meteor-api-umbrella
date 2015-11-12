@@ -49,10 +49,12 @@ Tinytest.add(
     };
 
     try {
-      apiUmbrellaWeb.adminApi.v1.apiBackends.createApiBackend(constructedBackend);
+      var response = apiUmbrellaWeb.adminApi.v1.apiBackends.createApiBackend(constructedBackend);
     } catch (error) {
-      test.equal(error.name,'ApiUmbrellaError', 'Not an ApiUmbrellaError');
+      test.equal(error.name, 'ApiUmbrellaError', 'Should be ApiUmbrellaError');
       test.equal(error.http_status, 422, 'Unexpected http_status');
+      test.equal(error.backend_errors.backend_protocol[0], 'is not included in the list');
+      test.equal(error.backend_errors.backend_host.base[0], 'must have at least one url_matches');
     }
     // test.throws(
     //   function(){
